@@ -1,35 +1,19 @@
-pipeline {
+pipeline{
     agent any
-
-    environment {
-        AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('aws-secret-key-id')
-        AWS_DEFAULT_REGION    = 'eu-north-1'
-    }
-
     stages {
-
-        stage('Checkout') {
+        stage('source code') {
             steps {
-                git branch: 'main', url: 'https://github.com/sujitht007/day6.git'
+                echo 'Cloning...'
+                   git branch: 'main', url: 'https://github.com/PV-Sudarsan/task-jenkins.git'
+
             }
         }
-
-        stage('Terraform Init') {
+        stage('terraform') {
             steps {
+                echo 'Deploying...'
                 sh 'terraform init'
-            }
-        }
-
-        stage('Terraform Plan') {
-            steps {
-                sh 'terraform plan'
-            }
-        }
-
-        stage('Terraform Apply') {
-            steps {
-                sh 'terraform apply -auto-approve'
+                sh 'terraform plan -var="ami=ami-0abc1234def567890" '
+                sh 'terraform apply -var="ami=ami-0abc1234def567890" -auto-approve'
             }
         }
     }
