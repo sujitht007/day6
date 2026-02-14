@@ -1,11 +1,11 @@
 output "instance_id" {
-  value = aws_instance.ec2.id
+  value = aws_instance.jenkins_instance.id
 }
 
 output "public_ip" {
-  value = aws_instance.ec2.public_ip
+  value = aws_instance.jenkins_instance.public_ip
 }
 
-output "key_pair_used" {
-  value = var.existing_key_pair_name
+output "public_dns" {
+  value = aws_instance.jenkins_instance.public_dns
 }
