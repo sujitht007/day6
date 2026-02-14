@@ -1,19 +1,35 @@
-pipeline{
+pipeline {
     agent any
-    stages {
-        stage('source code') {
-            steps {
-                echo 'Cloning...'
-                   git branch: 'main', url: 'https://github.com/sujitht007/day6.git'
 
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/sujitht007/day6.git'
             }
         }
-        stage('terraform') {
+
+        stage('Terraform Init') {
             steps {
-                echo 'Deploying...'
                 sh 'terraform init'
-                sh 'terraform plan -var="ami-073130f74f5ffb161" '
-                sh 'terraform apply -var="ami-073130f74f5ffb161" -auto-approve'
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                sh 'terraform validate'
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply -auto-approve'
             }
         }
     }
