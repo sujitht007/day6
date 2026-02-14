@@ -12,8 +12,8 @@ pipeline{
             steps {
                 echo 'Deploying...'
                 sh 'terraform init'
-                sh 'terraform plan -var="ami=ami-073130f74f5ffb161" '
-                sh 'terraform apply -var="ami=ami-073130f74f5ffb161" -auto-approve'
+                sh 'terraform plan -var="ami_id=ami-073130f74f5ffb161" '
+                sh 'terraform apply -var="ami_id=ami-073130f74f5ffb161" -auto-approve'
             }
         }
     }
